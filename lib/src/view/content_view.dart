@@ -152,6 +152,7 @@ class ContentViewState extends State<ContentView> {
     return Scaffold(
       key: _key,
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           GestureDetector(
