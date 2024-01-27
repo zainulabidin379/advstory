@@ -66,9 +66,3 @@
 - Fixed tray animation not start issue.
 - Fixed story stop on page change cancel. 
 - Fixed story indicator progress on next story page.
-
-# 1.0.0
-***Bug fixes***
-
-- Added onStoryViewed callback
-- Added isStroyViewed in Story Tray
