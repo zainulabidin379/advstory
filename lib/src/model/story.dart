@@ -25,6 +25,7 @@ class Story {
     required this.contentBuilder,
     this.header,
     this.footer,
+    this.onStoryViewed,
   });
 
   /// Function that will be called to build a [AdvStoryContent].
@@ -47,4 +48,9 @@ class Story {
   ///
   /// If null, the story's bottom section will be empty.
   final Widget? footer;
+
+  /// A callback when story is viewed
+  ///
+  /// Will return [index] of story viewed
+  final Function(int storyIndex)? onStoryViewed;
 }

@@ -169,7 +169,7 @@ class ContentViewState extends State<ContentView> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final content = widget.story.contentBuilder(index);
-
+                widget.story.onStoryViewed?.call(index);
                 return Stack(
                   children: [
                     ContentPositionProvider(

@@ -17,6 +17,9 @@ class VideoStoryContent extends StatelessWidget {
       storyBuilder: (storyIndex) {
         return Story(
           contentCount: 2,
+          onStoryViewed: ((storyIndex) {
+            
+          }),
           contentBuilder: (contentIndex) {
             return VideoContent(
               // Story video url
