@@ -42,7 +42,7 @@ class AdvStoryTray extends AnimatedTray {
       Color(0xaffd1d1d),
       Color(0xaf405de6),
     ],
-    this.gapSize = 3,
+    this.gapSize = 2,
     this.strokeWidth = 2,
     this.animationDuration = const Duration(milliseconds: 1200),
     this.isStoryViewed = false,
@@ -172,28 +172,26 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
           height: widget.size.height,
           child: Stack(
             children: [
-              widget.isStoryViewed
-                  ? const SizedBox.shrink()
-                  : CustomPaint(
-                      painter: AnimatedBorderPainter(
-                        gradientColors: _gradientColors,
-                        gapSize: widget.gapSize,
-                        radius: widget.shape == BoxShape.circle
-                            ? widget.size.width
-                            : widget.borderRadius,
-                        strokeWidth: widget.strokeWidth,
-                        animation: CurvedAnimation(
-                          parent: Tween(begin: 0.0, end: 1.0).animate(
-                            _rotationController,
-                          ),
-                          curve: Curves.slowMiddle,
-                        ),
-                      ),
-                      child: SizedBox(
-                        width: widget.size.width,
-                        height: widget.size.height,
-                      ),
+              CustomPaint(
+                painter: AnimatedBorderPainter(
+                  gradientColors: _gradientColors,
+                  gapSize: widget.gapSize,
+                  radius: widget.shape == BoxShape.circle
+                      ? widget.size.width
+                      : widget.borderRadius,
+                  strokeWidth: widget.isStoryViewed ? 0 : widget.strokeWidth,
+                  animation: CurvedAnimation(
+                    parent: Tween(begin: 0.0, end: 1.0).animate(
+                      _rotationController,
                     ),
+                    curve: Curves.slowMiddle,
+                  ),
+                ),
+                child: SizedBox(
+                  width: widget.size.width,
+                  height: widget.size.height,
+                ),
+              ),
               Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
