@@ -11,6 +11,7 @@ import 'package:advstory/src/view/inherited_widgets/content_position_provider.da
 import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 /// View for story contents. This widget uses a PageView to show story content
 /// in a sequence.
@@ -153,67 +154,80 @@ class ContentViewState extends State<ContentView> {
       key: _key,
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          GestureDetector(
-            onLongPressDown: _handleDownPress,
-            onLongPressCancel: _provider!.controller.resume,
-            onLongPressUp: _provider!.controller.resume,
-            onLongPress: _provider!.controller.exactPause,
-            onTapUp: _handleTapUp,
-            onVerticalDragEnd: _handleVerticalDrag,
-            child: PageView.builder(
-              allowImplicitScrolling: _provider!.preloadContent,
-              controller: _pageController,
-              itemCount: widget.story.contentCount,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final content = widget.story.contentBuilder(index);
-                return Stack(
-                  children: [
-                    ContentPositionProvider(
-                      position: StoryPosition(index, widget.storyIndex),
-                      child: content,
-                    ),
-                    Scaffold(
-                      backgroundColor: Colors.transparent,
-                      body: SafeArea(
-                        top: _provider!.hasTrays,
-                        bottom: _provider!.hasTrays,
-                        child: FadeTransition(
-                          opacity: _provider!.controller.opacityController,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: _getComponents(content),
+      body: VisibilityDetector(
+        key: GlobalKey(),
+        onVisibilityChanged: (info) {},
+        child: Stack(
+          children: [
+            GestureDetector(
+              onLongPressDown: _handleDownPress,
+              onLongPressCancel: _provider!.controller.resume,
+              onLongPressUp: _provider!.controller.resume,
+              onLongPress: _provider!.controller.exactPause,
+              onTapUp: _handleTapUp,
+              onVerticalDragEnd: _handleVerticalDrag,
+              child: PageView.builder(
+                allowImplicitScrolling: _provider!.preloadContent,
+                controller: _pageController,
+                itemCount: widget.story.contentCount,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final content = widget.story.contentBuilder(index);
+                  return VisibilityDetector(
+                    key: GlobalKey(),
+                    onVisibilityChanged: (info) {
+                      if (mounted) {
+                        if (info.visibleFraction > 0.9) {
+                          widget.story.onStoryViewed?.call(index);
+                        }
+                      }
+                    },
+                    child: Stack(
+                      children: [
+                        ContentPositionProvider(
+                          position: StoryPosition(index, widget.storyIndex),
+                          child: content,
+                        ),
+                        Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: SafeArea(
+                            top: _provider!.hasTrays,
+                            bottom: _provider!.hasTrays,
+                            child: FadeTransition(
+                              opacity: _provider!.controller.opacityController,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: _getComponents(content),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                );
+                  );
+                },
+              ),
+            ),
+            ValueListenableBuilder(
+              valueListenable: _provider!.positionNotifier,
+              builder: (context, value, child) {
+                return value == widget.storyIndex
+                    ? StoryIndicator(
+                        activeIndicatorIndex: _pageController!.page?.toInt() ??
+                            _pageController!.initialPage.toInt(),
+                        count: widget.story.contentCount,
+                        controller: _provider!
+                            .controller.flowManager.indicatorController,
+                        style: _provider!.style.indicatorStyle,
+                      )
+                    : StoryIndicator.placeholder(
+                        count: widget.story.contentCount,
+                        style: _provider!.style.indicatorStyle,
+                      );
               },
             ),
-          ),
-          ValueListenableBuilder(
-            valueListenable: _provider!.positionNotifier,
-            builder: (context, value, child) {
-              widget.story.onStoryViewed?.call(widget.storyIndex);
-              return value == widget.storyIndex
-                  ? StoryIndicator(
-                      activeIndicatorIndex: _pageController!.page?.toInt() ??
-                          _pageController!.initialPage.toInt(),
-                      count: widget.story.contentCount,
-                      controller:
-                          _provider!.controller.flowManager.indicatorController,
-                      style: _provider!.style.indicatorStyle,
-                    )
-                  : StoryIndicator.placeholder(
-                      count: widget.story.contentCount,
-                      style: _provider!.style.indicatorStyle,
-                    );
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
