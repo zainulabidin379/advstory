@@ -7,8 +7,8 @@ import 'package:advstory/src/util/extended_page_controller.dart';
 import 'package:advstory/src/view/components/contents/contents_base.dart';
 import 'package:advstory/src/view/components/contents/simple_custom_content.dart';
 import 'package:advstory/src/view/components/story_indicator.dart';
-import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
 import 'package:advstory/src/view/inherited_widgets/content_position_provider.dart';
+import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -169,7 +169,6 @@ class ContentViewState extends State<ContentView> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final content = widget.story.contentBuilder(index);
-                widget.story.onStoryViewed?.call(index);
                 return Stack(
                   children: [
                     ContentPositionProvider(
@@ -198,6 +197,7 @@ class ContentViewState extends State<ContentView> {
           ValueListenableBuilder(
             valueListenable: _provider!.positionNotifier,
             builder: (context, value, child) {
+              widget.story.onStoryViewed?.call(widget.storyIndex);
               return value == widget.storyIndex
                   ? StoryIndicator(
                       activeIndicatorIndex: _pageController!.page?.toInt() ??
