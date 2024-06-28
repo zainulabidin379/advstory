@@ -26,6 +26,7 @@ class AdvStory extends StatefulWidget {
     required this.storyCount,
     required this.storyBuilder,
     required this.trayBuilder,
+    required this.scrollController,
     AdvStoryController? controller,
     this.buildStoryOnTrayScroll = true,
     this.preloadStory = true,
@@ -49,6 +50,7 @@ class AdvStory extends StatefulWidget {
     this.preloadStory = true,
     this.style = const AdvStoryStyle(),
     required AdvStoryPlayerController controller,
+    required this.scrollController,
   })  : hasTrays = false,
         buildStoryOnTrayScroll = false,
         trayBuilder = null,
@@ -73,6 +75,8 @@ class AdvStory extends StatefulWidget {
   /// gestures, capture and block events before they happen and more.
   /// {@endtemplate}
   final AdvStoryController? storyController;
+
+  final ScrollController scrollController;
 
   /// The number of [Story]s to build and display.
   final int storyCount;
@@ -201,6 +205,7 @@ class _AdvStoryState extends State<AdvStory> with TickerProviderStateMixin {
         buildHelper: _buildHelper,
         buildStoryOnTrayScroll: widget.buildStoryOnTrayScroll,
         controller: _controller,
+        scrollController: widget.scrollController,
         preloadContent: widget.preloadContent,
         preloadStory: widget.preloadStory,
         style: widget.style,

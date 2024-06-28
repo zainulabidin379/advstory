@@ -81,6 +81,7 @@ class _AdvStoryTrayCustomizationState extends State<AdvStoryTrayCustomization> {
           ),
           Expanded(
             child: AdvStory(
+              scrollController: ScrollController(),
               storyCount: userNames.length,
               storyBuilder: (index) async {
                 return Story(

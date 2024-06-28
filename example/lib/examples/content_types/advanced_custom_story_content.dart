@@ -17,6 +17,7 @@ class AdvancedCustomStoryContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdvStory(
+      scrollController: ScrollController(),
       storyCount: 5,
       storyBuilder: (storyIndex) {
         return Story(

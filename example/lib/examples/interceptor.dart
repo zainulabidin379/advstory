@@ -75,6 +75,7 @@ class _InterceptorState extends State<Interceptor> {
         SizedBox(
           height: 80,
           child: AdvStory(
+            scrollController: ScrollController(),
             controller: _controller,
             storyCount: profilePics.length,
             storyBuilder: (index) => Story(

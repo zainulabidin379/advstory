@@ -10,6 +10,7 @@ class VideoStoryContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdvStory(
+      scrollController: ScrollController(),
       storyCount: 5,
       // This example creates only video contents, video sizes are large.
       // Disable story preload.
@@ -17,9 +18,7 @@ class VideoStoryContent extends StatelessWidget {
       storyBuilder: (storyIndex) {
         return Story(
           contentCount: 2,
-          onStoryViewed: ((storyIndex) {
-            
-          }),
+          onStoryViewed: ((storyIndex) {}),
           contentBuilder: (contentIndex) {
             return VideoContent(
               // Story video url

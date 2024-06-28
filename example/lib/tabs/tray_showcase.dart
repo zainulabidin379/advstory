@@ -60,6 +60,7 @@ class _TrayShowcaseState extends State<TrayShowcase> {
                 // Disable story build on scroll to increasing animation
                 // duration.
                 buildStoryOnTrayScroll: false,
+                scrollController: ScrollController(),
                 style: AdvStoryStyle(
                   trayListStyle: TrayListStyle(
                     direction: _isHorizontal ? Axis.horizontal : Axis.vertical,
@@ -87,6 +88,7 @@ class _TrayShowcaseState extends State<TrayShowcase> {
               height: _isHorizontal ? 80 : double.maxFinite,
               width: _isHorizontal ? double.maxFinite : 80,
               child: AdvStory(
+                scrollController: ScrollController(),
                 style: AdvStoryStyle(
                   trayListStyle: TrayListStyle(
                     direction: _isHorizontal ? Axis.horizontal : Axis.vertical,

@@ -11,6 +11,7 @@ class ImageStoryContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdvStory(
       storyCount: 5,
+      scrollController: ScrollController(),
       storyBuilder: (storyIndex) {
         return Story(
           contentCount: 5,

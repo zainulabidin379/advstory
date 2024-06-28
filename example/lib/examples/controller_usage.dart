@@ -170,6 +170,7 @@ class _ControllerUsageState extends State<ControllerUsage> {
                 height: 80,
                 child: AdvStory(
                   key: _key,
+                  scrollController: ScrollController(),
                   controller: _controller,
                   storyCount: userNames.length,
                   storyBuilder: (index) => Story(

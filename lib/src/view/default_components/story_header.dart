@@ -16,7 +16,7 @@ class StoryHeader extends StatelessWidget {
 
   /// Image url for the user profile picture.
   final String url;
-  
+
   ///image height and width
   final Size imageSize;
 

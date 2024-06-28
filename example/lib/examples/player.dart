@@ -78,6 +78,7 @@ class _PlayerState extends State<Player> {
                   width: MediaQuery.of(context).size.width * .5,
                   height: MediaQuery.of(context).size.height * .5,
                   child: AdvStory.player(
+                    scrollController: ScrollController(),
                     storyCount: profilePics.length,
                     controller: _controller,
                     style: const AdvStoryStyle(

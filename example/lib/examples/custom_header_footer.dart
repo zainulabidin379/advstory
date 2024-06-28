@@ -39,6 +39,7 @@ class CustomHeaderFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdvStory(
+      scrollController: ScrollController(),
       storyCount: userNames.length,
       storyBuilder: (storyIndex) {
         return Story(
