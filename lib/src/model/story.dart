@@ -53,4 +53,7 @@ class Story {
   ///
   /// Will return [index] of story viewed
   final Function(int storyIndex)? onStoryViewed;
+  
+  /// A callback when story is dismissed
+  final Function()? onStoryDismissed;
 }
