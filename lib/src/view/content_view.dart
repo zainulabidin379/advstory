@@ -179,6 +179,8 @@ class ContentViewState extends State<ContentView> {
                       if (mounted) {
                         if (info.visibleFraction > 0.9) {
                           widget.story.onStoryViewed?.call(index);
+                        } else {
+                          widget.story.onStoryDismissed?.call();
                         }
                       }
                     },
