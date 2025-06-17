@@ -26,6 +26,7 @@ class Story {
     this.header,
     this.footer,
     this.onStoryViewed,
+    this.onStoryDismissed,
   });
 
   /// Function that will be called to build a [AdvStoryContent].
