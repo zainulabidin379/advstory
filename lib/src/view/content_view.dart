@@ -156,7 +156,13 @@ class ContentViewState extends State<ContentView> {
       backgroundColor: Colors.black,
       body: VisibilityDetector(
         key: GlobalKey(),
-        onVisibilityChanged: (info) {},
+        onVisibilityChanged: (info) {
+          if (mounted) {
+            if (info.visibleFraction < 0.1) {
+              widget.story.onStoryDismissed?.call();
+            }
+          }
+        },
         child: Stack(
           children: [
             GestureDetector(
@@ -179,8 +185,6 @@ class ContentViewState extends State<ContentView> {
                       if (mounted) {
                         if (info.visibleFraction > 0.9) {
                           widget.story.onStoryViewed?.call(index);
-                        } else if (info.visibleFraction < 0.1) {
-                          widget.story.onStoryDismissed?.call();
                         }
                       }
                     },
